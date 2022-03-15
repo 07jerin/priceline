@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Game {
 
-    private Random random = new Random();
+    private final Random random = new Random();
     Player dijkstra = new Player("dijkstra");
     Player turing = new Player("turing");
     Player hopper = new Player("hopper");
