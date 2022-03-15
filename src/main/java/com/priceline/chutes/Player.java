@@ -2,8 +2,8 @@ package com.priceline.chutes;
 
 public class Player {
 
-    String name;
-    int position = 0;
+    private final String name;
+    private int position;
 
     Player(String name){
         this.name = name;

@@ -1,13 +1,15 @@
 package com.priceline.chutes;
 
 public class BoardSquare {
-    private boolean isChute;
-    private boolean isLadder;
-    private int numberSquaresToSkip;
+    private final boolean isChute;
+    private final boolean isLadder;
+    private final int numberSquaresToSkip;
+
     BoardSquare(){
         this(false, false, 0);
     }
-    BoardSquare(boolean isChute, boolean isLadder, int numberSquaresToSkip){
+
+    private BoardSquare(boolean isChute, boolean isLadder, int numberSquaresToSkip){
         this.isChute = isChute;
         this.isLadder = isLadder;
         this.numberSquaresToSkip = numberSquaresToSkip;
