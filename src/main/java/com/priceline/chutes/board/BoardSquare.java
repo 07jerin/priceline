@@ -6,21 +6,21 @@ public class BoardSquare {
     private final int numberSquaresToSkip;
 
 
-    private BoardSquare(boolean isChute, boolean isLadder, int numberSquaresToSkip){
+    private BoardSquare(boolean isChute, boolean isLadder, int numberSquaresToSkip) {
         this.isChute = isChute;
         this.isLadder = isLadder;
         this.numberSquaresToSkip = numberSquaresToSkip;
     }
 
-    public  static BoardSquare buildNormalSquare(){
-        return  new BoardSquare(false, false, 0);
+    public static BoardSquare buildNormalSquare() {
+        return new BoardSquare(false, false, 0);
     }
 
-    public static BoardSquare buildChute(int numberSquaresToSkip){
+    public static BoardSquare buildChute(int numberSquaresToSkip) {
         return new BoardSquare(true, false, numberSquaresToSkip);
     }
 
-    public static BoardSquare buildLadder(int numberSquaresToSkip){
+    public static BoardSquare buildLadder(int numberSquaresToSkip) {
         return new BoardSquare(false, true, numberSquaresToSkip);
     }
 
@@ -32,5 +32,13 @@ public class BoardSquare {
         } else {
             return 0;
         }
+    }
+
+    public boolean getIsChute() {
+        return isChute;
+    }
+
+    public boolean getIsLadder() {
+        return isLadder;
     }
 }

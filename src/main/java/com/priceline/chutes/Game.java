@@ -3,56 +3,50 @@ package com.priceline.chutes;
 import com.priceline.chutes.board.*;
 import com.priceline.chutes.board.creation.service.BoardLoader;
 import com.priceline.chutes.board.creation.service.ConsoleBoardLoader;
+import com.priceline.chutes.board.render.service.BoardRender;
+import com.priceline.chutes.board.render.service.ConsoleBoardRenderer;
+import com.priceline.chutes.gameplay.ChutesConsoleGameplay;
+import com.priceline.chutes.gameplay.GamePlay;
 import com.priceline.chutes.player.Player;
 import com.priceline.chutes.player.service.ConsolePlayerLoader;
 import com.priceline.chutes.player.service.PlayerLoader;
 
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Game {
 
     private final Random random = new Random();
+    private final Scanner scanner = new Scanner(System.in);
     // TODO: load based on runtime configuration or DI
     private final PlayerLoader playerLoader = new ConsolePlayerLoader();
     private final BoardLoader boardLoader = new ConsoleBoardLoader();
+    private final BoardRender boardRender = new ConsoleBoardRenderer();
+    private final GamePlay gamePlay = new ChutesConsoleGameplay();
+
 
     private Player[] players;
     private Board board;
 
-    public void setUpGame(){
+    public void setUpGame() {
         System.out.println("Create players -------------------> ");
         this.players = playerLoader.loadPlayers();
         System.out.println("Welcome " + Arrays.toString(players));
 
         System.out.println("Set up board -------------------> ");
         this.board = boardLoader.createBoard();
+        boardRender.displayBoard(this.board);
     }
 
-    public Player playGame(){
+    public Player playGame() {
         this.setUpGame();
-
-
-        while(true){
-            for (Player currentPlayer : players) {
-                int spinResult = spin();
-                int nextPosition = currentPlayer.getPosition() + spinResult;
-                if (nextPosition > 100){
-                    break;
-                }
-                BoardSquare nextSquare = board.getSquareAtPosition(nextPosition);
-                nextPosition += nextSquare.getNumberSquaresToSkip();
-                if (nextPosition < 100) {
-                    currentPlayer.setPosition(nextPosition);
-                } else if (nextPosition == 100) {
-                    return currentPlayer;//The winner!
-                }
-            }
-        }
+        return this.startGame();
     }
 
-    private int spin(){
-        return random.nextInt(6) + 1;
+    private Player startGame() {
+        return gamePlay.playGame(this.board, this.players, this.boardRender);
+
     }
 
     public static void main(String[] args) {
