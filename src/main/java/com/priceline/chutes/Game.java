@@ -1,18 +1,37 @@
 package com.priceline.chutes;
 
+import com.priceline.chutes.board.*;
+import com.priceline.chutes.board.creation.service.BoardLoader;
+import com.priceline.chutes.board.creation.service.ConsoleBoardLoader;
+import com.priceline.chutes.player.Player;
+import com.priceline.chutes.player.service.ConsolePlayerLoader;
+import com.priceline.chutes.player.service.PlayerLoader;
+
+import java.util.Arrays;
 import java.util.Random;
 
 public class Game {
 
     private final Random random = new Random();
-    Player dijkstra = new Player("dijkstra");
-    Player turing = new Player("turing");
-    Player hopper = new Player("hopper");
-    Player torvalds = new Player("torvalds");
+    // TODO: load based on runtime configuration or DI
+    private final PlayerLoader playerLoader = new ConsolePlayerLoader();
+    private final BoardLoader boardLoader = new ConsoleBoardLoader();
+
+    private Player[] players;
+    private Board board;
+
+    public void setUpGame(){
+        System.out.println("Create players -------------------> ");
+        this.players = playerLoader.loadPlayers();
+        System.out.println("Welcome " + Arrays.toString(players));
+
+        System.out.println("Set up board -------------------> ");
+        this.board = boardLoader.createBoard();
+    }
 
     public Player playGame(){
-        Player[] players = new Player[]{dijkstra, turing, hopper, torvalds};
-        Board board = new Board();
+        this.setUpGame();
+
 
         while(true){
             for (Player currentPlayer : players) {
@@ -39,6 +58,7 @@ public class Game {
     public static void main(String[] args) {
         try {
             Player winner = new Game().playGame();
+
             System.out.println("The winner is: " + winner.getName());
         } catch (Exception e) {
             e.printStackTrace();

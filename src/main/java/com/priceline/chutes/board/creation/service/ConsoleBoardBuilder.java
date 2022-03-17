@@ -1,4 +1,7 @@
-package com.priceline.chutes;
+package com.priceline.chutes.board.creation.service;
+
+import com.priceline.chutes.board.Board;
+import com.priceline.chutes.board.BoardSquare;
 
 import java.util.List;
 import java.util.Map;
@@ -8,9 +11,9 @@ import java.util.stream.IntStream;
 
 import static java.util.Map.entry;
 
-public class Board {
+public class ConsoleBoardBuilder implements BoardBuilder{
 
-    private static final Map<Integer, BoardSquare> SPECIAL_SQUARES = Map.ofEntries(
+    private static final Map<Integer, BoardSquare> DEFAULT_SPECIAL_SQUARES = Map.ofEntries(
             entry(1, BoardSquare.buildLadder(37)),
             entry(4, BoardSquare.buildLadder(10)),
             entry(9, BoardSquare.buildLadder(22)),
@@ -32,19 +35,29 @@ public class Board {
             entry(98, BoardSquare.buildChute(20))
     );
 
-    private final List<BoardSquare> squares;
 
 
-    Board() {
-        squares = IntStream.rangeClosed(1, 100)
+    @Override
+    public  Board buildDefaultBoard(){
+        List<BoardSquare> squares = IntStream.rangeClosed(1, 100)
                 .mapToObj(i -> Optional
-                        .ofNullable(Board.SPECIAL_SQUARES.get(i))
-                        .orElseGet(BoardSquare::new))
+                        .ofNullable(ConsoleBoardBuilder.DEFAULT_SPECIAL_SQUARES.get(i))
+                        .orElseGet(BoardSquare::buildNormalSquare))
                 .collect(Collectors.toList());
+        return new Board("Default Console Board", squares);
     }
 
-    BoardSquare getSquareAtPosition(int i){
-        return squares.get(i-1);
+    @Override
+    public  Board buildRandomBoard(){
+        //TODO:
+        System.out.println("Random builder not implemented yet : falling back to default board");
+        return buildDefaultBoard();
     }
 
+    @Override
+    public  Board buildCustomBoard(){
+        //TODO:
+        System.out.println("Custom builder not implemented yet : falling back to default board");
+        return buildDefaultBoard();
+    }
 }

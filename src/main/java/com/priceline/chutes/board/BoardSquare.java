@@ -1,18 +1,19 @@
-package com.priceline.chutes;
+package com.priceline.chutes.board;
 
 public class BoardSquare {
     private final boolean isChute;
     private final boolean isLadder;
     private final int numberSquaresToSkip;
 
-    BoardSquare(){
-        this(false, false, 0);
-    }
 
     private BoardSquare(boolean isChute, boolean isLadder, int numberSquaresToSkip){
         this.isChute = isChute;
         this.isLadder = isLadder;
         this.numberSquaresToSkip = numberSquaresToSkip;
+    }
+
+    public  static BoardSquare buildNormalSquare(){
+        return  new BoardSquare(false, false, 0);
     }
 
     public static BoardSquare buildChute(int numberSquaresToSkip){

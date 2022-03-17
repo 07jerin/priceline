@@ -1,11 +1,13 @@
-package com.priceline.chutes;
+package com.priceline.chutes.player;
+
+import java.lang.annotation.Documented;
 
 public class Player {
 
     private final String name;
     private int position;
 
-    Player(String name){
+    public Player(String name){
         this.name = name;
     }
 
@@ -19,5 +21,10 @@ public class Player {
 
     public void setPosition(int position) {
         this.position = position;
+    }
+
+    @Override
+    public  String toString(){
+        return getName() + " in position : " + getPosition();
     }
 }

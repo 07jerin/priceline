@@ -1,5 +1,6 @@
 package com.priceline.chutes;
 
+import com.priceline.chutes.board.BoardSquare;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
@@ -33,6 +34,6 @@ public class BoardSquareTest {
 
     @Test
     public void checkSquaresToSkipForPlainSquare(){
-        assertEquals(0, new BoardSquare().getNumberSquaresToSkip());
+        assertEquals(0, BoardSquare.buildNormalSquare().getNumberSquaresToSkip());
     }
 }
